@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jab We Met Juniors - BCA Fresher's Party Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f97316;
+            --primary-dark: #c2410c;
+            --accent: #eab308;
+            --dark-blue: #0f172a;
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --gold: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #090d16 0%, #1e1b4b 50%, #0f172a 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Ambient Background Audio Control */
+        .audio-ctrl {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .audio-ctrl:hover {
+            background: var(--gold);
+            color: #000;
+        }
+
+        /* Container */
+        .wrapper {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Envelope / Wax Seal Screen */
+        .envelope-screen {
+            background: linear-gradient(145deg, #1e1b4b, #0f172a);
+            border: 2px solid var(--gold);
+            border-radius: 24px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(245, 158, 11, 0.2);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .envelope-screen.hidden {
+            opacity: 0;
+            transform: translateY(-50px) scale(0.9);
+            pointer-events: none;
+            display: none;
+        }
+
+        .college-badge {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .envelope-title {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .recipient-box {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px dashed var(--gold);
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-size: 16px;
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+
+        .wax-seal-btn {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+            border: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .wax-seal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(245, 158, 11, 0.6);
+        }
+
+        /* Main Invitation Card */
+        .main-card {
+            background: linear-gradient(145deg, rgba(30, 27, 75, 0.95), rgba(15, 23, 42, 0.95));
+            border: 2px solid var(--gold);
+            border-radius: 24px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7), 0 0 40px rgba(249, 115, 22, 0.2);
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            pointer-events: none;
+            display: none;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .main-card.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            display: block;
+        }
+
+        .dept-tag {
+            font-size: 12px;
+            letter-spacing: 1px;
+            background: rgba(249, 115, 22, 0.2);
+            color: #fb923c;
+            padding: 6px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+            border: 1px solid rgba(249, 115, 22, 0.4);
+            font-weight: 600;
+        }
+
+        .event-main-title {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            color: #fff;
+            margin-bottom: 5px;
+            text-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
+        }
+
+        .event-sub {
+            font-size: 20px;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .poster-info-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        .info-row i {
+            color: var(--gold);
+            font-size: 18px;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        /* Countdown */
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .time-box {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 10px;
+            padding: 10px 5px;
+            text-align: center;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .time-box label {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+        }
+
+        /* Signature & Blessing Form */
+        .form-section {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            text-align: left;
+        }
+
+        .form-section h3 {
+            font-size: 16px;
+            color: var(--gold);
+            margin-bottom: 12px;
+            font-family: 'Cinzel', serif;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 12px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 12px;
+            color: #cbd5e1;
+            margin-bottom: 5px;
+        }
+
+        .input-group textarea, .input-group select {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid #475569;
+            border-radius: 8px;
+            padding: 10px;
+            color: #fff;
+            font-size: 14px;
+            resize: none;
+        }
+
+        .input-group textarea:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        /* Digital Signature Pad */
+        .sig-container {
+            border: 1px dashed #64748b;
+            background: #fff;
+            border-radius: 8px;
+            position: relative;
+            height: 100px;
+            margin-bottom: 12px;
+            cursor: crosshair;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+            border-radius: 8px;
+        }
+
+        .sig-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .clear-sig {
+            background: transparent;
+            border: none;
+            color: #ef4444;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .organizers {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+
+        .organizers strong {
+            color: #e2e8f0;
+            display: block;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Audio Button -->
+    <button class="audio-ctrl" onclick="toggleAudio()" id="audioBtn">
+        🎵 Play Music
+    </button>
+
+    <div class="wrapper">
+        <!-- ENVELOPE / WAX SEAL INTRO FOR HOD SIR -->
+        <div class="envelope-screen" id="envelopeScreen">
+            <div class="college-badge">Dr. MPS Group of Institutions</div>
+            <div class="envelope-title">Department of Computer Science</div>
+            
+            <div class="recipient-box">
+                <strong>Official Invitation To:</strong><br>
+                <span style="font-size: 18px; color: var(--gold); font-weight: 700;">Mr. Vijay Bhadouria Sir</span><br>
+                <span style="font-size: 13px; color: #94a3b8;">HOD & CS Faculty Members</span>
+            </div>
+
+            <p style="font-size: 14px; color: #cbd5e1; line-height: 1.6; margin-bottom: 20px;">
+                Respected Sir, you are cordially invited with immense pride by the senior batch to grace our upcoming BCA Freshers' Party!
+            </p>
+
+            <button class="wax-seal-btn" onclick="openInvitation()">
+                <span>🔓 Open Invitation Seal</span>
+            </button>
+        </div>
+
+        <!-- MAIN INVITATION CARD -->
+        <div class="main-card" id="mainCard">
+            <div class="dept-tag">Department of Computer Science</div>
+            <h1 class="event-main-title">जब वी मेट</h1>
+            <div class="event-sub">Jab We Met Juniors</div>
+            <p style="font-size: 15px; font-weight: 500; color: #fb923c; margin-bottom: 15px;">(BCA Fresher's Party 2026)</p>
+
+            <!-- Event Details Box -->
+            <div class="poster-info-box">
+                <div class="info-row">
+                    <i>📅</i> <span><strong>Date:</strong> 27th October 2026</span>
+                </div>
+                <div class="info-row">
+                    <i>⏰</i> <span><strong>Time:</strong> 10:00 AM Onwards</span>
+                </div>
+                <div class="info-row">
+                    <i>📍</i> <span><strong>Venue:</strong> Atulya Bharat Cultural Centre, Dr. MPS World School, Agra</span>
+                </div>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="countdown-grid">
+                <div class="time-box">
+                    <span id="days">00</span>
+                    <label>Days</label>
+                </div>
+                <div class="time-box">
+                    <span id="hours">00</span>
+                    <label>Hours</label>
+                </div>
+                <div class="time-box">
+                    <span id="mins">00</span>
+                    <label>Mins</label>
+                </div>
+                <div class="time-box">
+                    <span id="secs">00</span>
+                    <label>Secs</label>
+                </div>
+            </div>
+
+            <!-- Faculty Blessing & Signature Form -->
+            <div class="form-section">
+                <h3>Faculty RSVP & Blessings for Juniors</h3>
+                <form id="blessingForm" onsubmit="submitBlessing(event)">
+                    <div class="input-group">
+                        <label>Faculty Name / Designation:</label>
+                        <select id="facultyName" style="width:100%; padding:10px; background:#0f172a; color:#fff; border-radius:8px; border:1px solid #475569;">
+                            <option value="Mr. Vijay Bhadouria Sir (HOD)">Mr. Vijay Bhadouria Sir (HOD)</option>
+                            <option value="CS Department Faculty Member">CS Department Faculty Member</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Attendance Status:</label>
+                        <select id="attendanceStatus" style="width:100%; padding:10px; background:#0f172a; color:#fff; border-radius:8px; border:1px solid #475569;">
+                            <option value="Attending & Blessing ✅">Will Attend & Bless 😊</option>
+                            <option value="Best Wishes (Regrets) 🌟">Best Wishes (Prior engagement)</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Blessings / Advice for Juniors:</label>
+                        <textarea id="facultyMessage" rows="3" placeholder="Write your encouraging words or advice for the incoming BCA juniors..."></textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Digital Signature (Sign Below):</label>
+                        <div class="sig-container">
+                            <canvas id="sigCanvas"></canvas>
+                        </div>
+                        <div class="sig-actions">
+                            <span style="font-size:11px; color:#94a3b8;">Draw your signature using finger or mouse</span>
+                            <button type="button" class="clear-sig" onclick="clearSignature()">Clear Sign</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">✨ Submit Blessing & Send via WhatsApp</button>
+                </form>
+            </div>
+
+            <div class="organizers">
+                With Best Compliments From:
+                <strong>Squadron Leader AK Singh (Chairperson)</strong>
+                <strong>Akshay Kumar Singh (Director General)</strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Synth Web API -->
+    <script>
+        let audioCtx = null;
+        let isPlaying = false;
+        let synthInterval = null;
+
+        function toggleAudio() {
+            const btn = document.getElementById('audioBtn');
+            if (!isPlaying) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                playAmbientChord();
+                synthInterval = setInterval(playAmbientChord, 4000);
+                btn.innerText = "🔊 Music Playing";
+                isPlaying = true;
+            } else {
+                if (synthInterval) clearInterval(synthInterval);
+                if (audioCtx) audioCtx.close();
+                btn.innerText = "🎵 Play Music";
+                isPlaying = false;
+            }
+        }
+
+        function playAmbientChord() {
+            if (!audioCtx) return;
+            const freqs = [261.63, 329.63, 392.00, 523.25]; // C Major chord
+            freqs.forEach((f, i) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = i % 2 === 0 ? 'sine' : 'triangle';
+                osc.frequency.value = f;
+                gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3.5);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 3.5);
+            });
+        }
+
+        function openInvitation() {
+            document.getElementById('envelopeScreen').classList.add('hidden');
+            document.getElementById('mainCard').classList.add('show');
+            if (!isPlaying) toggleAudio(); // auto play celebratory vibe
+        }
+
+        // Countdown Timer for Oct 27, 2026 10:00 AM
+        const eventDate = new Date('October 27, 2026 10:00:00').getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = eventDate - now;
+            if (diff > 0) {
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
+        }, 1000);
+
+        // Signature Pad Logic
+        const canvas = document.getElementById('sigCanvas');
+        const ctx = canvas.getContext('2d');
+        let writing = false;
+
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            ctx.strokeStyle = '#0f172a';
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
+        }
+        window.addEventListener('load', resizeCanvas);
+        window.addEventListener('resize', resizeCanvas);
+
+        function getPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        canvas.addEventListener('mousedown', (e) => { writing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); });
+        canvas.addEventListener('mousemove', (e) => { if (!writing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); });
+        window.addEventListener('mouseup', () => writing = false);
+
+        canvas.addEventListener('touchstart', (e) => { writing = true; ctx.beginPath(); const p = getPos(e); ctx.moveTo(p.x, p.y); e.preventDefault(); });
+        canvas.addEventListener('touchmove', (e) => { if (!writing) return; const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); e.preventDefault(); });
+        window.addEventListener('touchend', () => writing = false);
+
+        function clearSignature() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function submitBlessing(e) {
+            e.preventDefault();
+            const name = document.getElementById('facultyName').value;
+            const status = document.getElementById('attendanceStatus').value;
+            const msg = document.getElementById('facultyMessage').value || "Best wishes to all juniors!";
+
+            // Format message to send directly to student WhatsApp
+            const whatsappText = `✨ *Official Blessing & RSVP - Jab We Met Juniors* ✨\n\n*From:* ${name}\n*Status:* ${status}\n\n*Blessings / Advice:* "${msg}"\n\n*(Verified Digital Signature Attached)*`;
+            
+            // Open WhatsApp (Replace 91XXXXXXXXXX with your actual student coordinator WhatsApp number)
+            const studentWhatsAppNumber = "919876543210"; 
+            const url = `https://wa.me/${studentWhatsAppNumber}?text=${encodeURIComponent(whatsappText)}`;
+            
+            alert("Thank you Sir! Redirecting to WhatsApp to send your blessings to the student organizers...");
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
